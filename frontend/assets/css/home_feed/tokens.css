@@ -1,0 +1,36 @@
+:root {
+  color-scheme: light dark;
+  --jf-surface: light-dark(#fff, #111615);
+  --jf-text: light-dark(#1c2521, #eff3ed);
+  --jf-muted: light-dark(#646f68, #abb5ae);
+  --jf-line: light-dark(#e4e9e4, #29332e);
+  --jf-soft: light-dark(#f5f7f3, #1b2420);
+  --jf-accent: #ed704e;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--jf-soft); color: var(--jf-text); font-family: "Segoe UI", Arial, sans-serif; }
+.jf-app { background: var(--jf-surface); color: var(--jf-text); min-height: 100dvh; }
+.jf-app button, .jf-app input, .jf-app textarea { font: inherit; }
+.jf-app button { border: 0; padding: 0; background: none; color: inherit; cursor: pointer; }
+.jf-app button:disabled { cursor: default; opacity: .45; }
+.jf-app p, .jf-app h1, .jf-app h2 { margin: 0; }
+.jf-app svg { width: 20px; height: 20px; flex-shrink: 0; }
+.jf-app [hidden] { display: none !important; }
+.jf-app button:focus-visible, .jf-app textarea:focus-visible, .jf-app a:focus-visible { outline: 3px solid #2870c7; outline-offset: 3px; }
+.jf-sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+.skip-link { position: fixed; top: -100px; left: 12px; z-index: 20; background: var(--jf-surface); color: var(--jf-text); padding: 12px; }
+.skip-link:focus { top: 8px; }
+.jf-avatar { width: 37px; height: 37px; border-radius: 50%; display: inline-grid; place-items: center; background: #e1e9dc; color: #3e5539; flex-shrink: 0; font-weight: 650; font-size: 15px; }
+.jf-avatar.nova { background: #233d35; color: #e7eddd; font-size: 19px; }
+.jf-avatar.amina { background: #e9e0ee; color: #715978; }
+.jf-icon-button { width: 44px; height: 44px; display: inline-flex; justify-content: center; align-items: center; border-radius: 50%; flex-shrink: 0; }
+.jf-icon-button:hover { background: var(--jf-soft); }
+.jf-error { color: light-dark(#a43823, #ffac97); font-size: 13px; line-height: 1.6; margin-top: 10px !important; }
+.jf-local-note { color: var(--jf-muted); font-size: 12px; line-height: 1.7; margin: 14px 0 !important; }
+.jf-connection { display: none; padding: 13px 16px; background: #fff1cf; color: #59491c; font-size: 13px; }
+.phx-disconnected .jf-connection { display: block; }
+.phx-disconnected [phx-click] { opacity: .5; pointer-events: none; }
+.jf-notice:not(:empty) { margin: 12px; padding: 12px; background: var(--jf-soft); border: 1px solid var(--jf-line); border-radius: 9px; font-size: 12px; line-height: 1.6; }
+@media (prefers-reduced-motion: no-preference) {
+  .jf-icon-button, .jf-app .jf-tabs button { transition: background-color .12s; }
+}

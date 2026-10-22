@@ -1,0 +1,30 @@
+.jf-post { display: grid; grid-template-columns: 37px minmax(0,1fr); gap: 10px; padding: 16px 16px 9px; border-bottom: 1px solid var(--jf-line); }
+.jf-post-main { min-width: 0; }
+.jf-author { display: flex; align-items: center; gap: 5px; min-height: 19px; white-space: nowrap; font-size: 13px; }
+.jf-author strong { overflow: hidden; text-overflow: ellipsis; font-weight: 650; }
+.jf-author > span { font-size: 11px; color: var(--jf-muted); overflow: hidden; text-overflow: ellipsis; }
+.jf-author small { margin-left: auto; font-size: 10px; color: var(--jf-muted); }
+.jf-post-text { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 14px; line-height: 1.6; margin: 5px 0 10px !important; }
+.jf-role-label { display: flex; align-items: center; gap: 5px; margin: 5px 0 !important; font-size: 11px; color: light-dark(#a84830,#ffac91); }
+.jf-role-label svg { width: 13px; height: 13px; }
+.jf-media-grid { display: grid; grid-template-columns: 1fr; gap: 3px; margin: 10px 0; border: 1px solid var(--jf-line); border-radius: 13px; overflow: hidden; background: var(--jf-soft); }
+.jf-media-grid.multiple { grid-template-columns: repeat(2,minmax(0,1fr)); }
+.jf-app .jf-thumb { position: relative; display: block; width: 100%; height: clamp(160px,45vw,250px); overflow: hidden; background: #233d35; color: #f4f6ef; }
+.jf-media-grid.multiple .jf-thumb { height: clamp(140px,32vw,205px); }
+.jf-thumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.jf-play { position: absolute; inset: 0; display: grid; place-items: center; background: #07100b12; }
+.jf-play > span { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #ffffff80; border-radius: 50%; color: white; background: #12251acc; }
+.jf-play svg { width: 18px; height: 18px; fill: currentColor; margin-left: 3px; }
+.jf-duration { position: absolute; bottom: 9px; left: 9px; background: #0b151bd9; color: white; border-radius: 4px; padding: 2px 6px; font-size: 11px; }
+.jf-expand { position: absolute; bottom: 7px; right: 7px; display: flex; padding: 4px; color: white; background: #101a1cb3; border-radius: 5px; }
+.jf-expand svg { width: 13px; height: 13px; }
+.jf-local-state { display: grid; place-items: center; position: absolute; inset: 0; padding: 12px; color: white; font-size: 12px; line-height: 1.6; background: #233d35; }
+.jf-role { padding: 10px 11px; border: 1px solid var(--jf-line); border-radius: 9px; font-size: 12px; }
+.jf-role small { display: block; color: var(--jf-muted); margin-top: 4px; font-size: 11px; }
+.jf-post-actions { display: flex; align-items: center; justify-content: space-between; margin: 5px 0 -3px; color: var(--jf-muted); }
+.jf-post-actions button { display: flex; align-items: center; justify-content: center; gap: 5px; min-width: 44px; height: 44px; font-size: 11px; }
+.jf-post-actions button:first-child { justify-content: flex-start; }
+.jf-post-actions svg { width: 17px; height: 17px; }
+.jf-post-actions .is-selected { color: var(--jf-accent); }
+.jf-post-actions .is-selected svg { fill: currentColor; }
+@media (max-width: 380px) { .jf-post { padding-left: 11px; padding-right: 11px; gap: 8px; } .jf-author > span { max-width: 95px; } }

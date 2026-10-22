@@ -1,0 +1,100 @@
+<div id="joblite-explore" class="jf-app">
+  <div class="jf-layout">
+    <JobliteWeb.Components.AppChrome.desktop_nav current="explore" />
+    <div class="jf-shell">
+      <header class="jf-header">
+        <a class="jf-logo" href="/" aria-label="Joblite home"><span>j</span>joblite<b>.</b></a>
+        <div><small>DIRECTORY</small></div>
+      </header>
+
+      <main id="main" class="jf-explore">
+        <h1>Explore job boards</h1>
+        <p class="jf-explore-intro">
+          Discover job boards for remote and local roles. Visit a board to browse its current
+          opportunities and apply on the original site.
+        </p>
+
+        <form
+          id="explore-filters"
+          class="jf-filters"
+          phx-change="boards:filter"
+          phx-submit="boards:filter"
+        >
+          <label class="jf-field">
+            <span class="jf-sr-only">Search boards</span>
+            <input
+              type="search"
+              name="text"
+              value={@filters.text}
+              placeholder="Search by name, country or category"
+              autocomplete="off"
+            />
+          </label>
+          <label class="jf-field">
+            <span class="jf-sr-only">Region</span>
+            <select name="region">
+              <option value="">Every region</option>
+              <option
+                :for={region <- @options.regions}
+                value={region.value}
+                selected={@filters.region == region.value}
+              >
+                {region.label}
+              </option>
+            </select>
+          </label>
+          <label class="jf-check">
+            <input
+              type="checkbox"
+              name="worldwide_only"
+              value="true"
+              checked={@filters.worldwide_only}
+            />
+            <span>Worldwide remote only</span>
+          </label>
+        </form>
+
+        <p id="explore-notice" class="jf-notice" role="status" aria-live="polite">{@notice}</p>
+
+        <.preferences_panel
+          preferences={@preferences}
+          options={@options}
+          signed_in={not is_nil(@current_user)}
+          registry_available={@preferences_available}
+        />
+
+        <.async_result :let={directory} assign={@directory}>
+          <:loading>
+            <p class="jf-explore-state">Loading the board directory…</p>
+          </:loading>
+          <:failed :let={_failure}>
+            <p class="jf-explore-state">
+              The board directory could not be loaded. The registry is unavailable right now.
+            </p>
+          </:failed>
+          <div :if={directory == []} class="jf-explore-state">
+            <h2>No board matches these filters.</h2>
+            <p>Clear the search or choose another region to see the rest of the directory.</p>
+            <a class="jf-explore-clear" href="/explore">Clear the filters</a>
+          </div>
+          <div :if={directory != []} class="jf-board-list">
+            <.board_card
+              :for={board <- directory}
+              board={board}
+              saved={MapSet.member?(@saved_ids, board.id)}
+            />
+          </div>
+        </.async_result>
+
+        <p class="jf-local-note">{@options.remote_notice}</p>
+      </main>
+
+      <nav class="jf-bottom-nav" aria-label="Main navigation">
+        <a href="/"><span>Feed</span></a>
+        <a href="/explore" aria-current="page"><span>Explore</span></a>
+        <a href="/explore/saved"><span>Saved boards</span></a>
+      </nav>
+    </div>
+    <JobliteWeb.Components.AppChrome.desktop_rail />
+  </div>
+</div>

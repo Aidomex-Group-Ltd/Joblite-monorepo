@@ -1,0 +1,20 @@
+@import "./home_feed/index.css";
+@import "./explore/boards.css";
+
+/* Shared chrome for the pages that surround the feed. Feed rules live in home_feed/. */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 5vw;
+  border-bottom: 1px solid var(--jf-line);
+  background: var(--jf-surface);
+  color: var(--jf-text);
+}
+.site-header a { font-weight: 750; text-decoration: none; color: inherit; }
+.site-header nav { display: flex; gap: 1rem; }
+.container { max-width: 850px; padding: 3rem 1.5rem; margin: auto; }
+h1 { font-size: clamp(1.9rem, 4vw, 3.2rem); line-height: 1.15; max-width: 18ch; }
+.container button { padding: .7rem 1rem; border: 0; border-radius: .4rem; color: white; background: #086c73; cursor: pointer; }
+button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid #bf4d15; outline-offset: 3px; }

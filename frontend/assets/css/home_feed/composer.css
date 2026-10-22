@@ -1,0 +1,20 @@
+.jf-dialog { width: 100vw; max-width: none; height: 100dvh; max-height: none; inset: 0; margin: 0; padding: 0; border: 0; background: var(--jf-surface); color: var(--jf-text); }
+.jf-dialog::backdrop { background: #07100b99; }
+.jf-dialog-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 66px; padding: max(8px,env(safe-area-inset-top)) 12px 8px; border-bottom: 1px solid var(--jf-line); }
+.jf-dialog-header h2 { margin-right: auto; font-size: 16px; font-weight: 650; }
+.jf-app .jf-pill { display: inline-flex; align-items: center; justify-content: center; min-height: 38px; border-radius: 22px; padding: 8px 18px; background: var(--jf-accent); color: #1f201b; font-size: 13px; font-weight: 650; }
+.jf-composer > form { min-height: 100%; }
+.jf-composer-content { padding: 20px 18px; }
+.jf-writer { display: flex; align-items: center; gap: 10px; font-size: 13px; }
+.jf-writer small { display: block; color: var(--jf-muted); margin-top: 3px; font-size: 11px; font-weight: 400; }
+.jf-composer textarea { display: block; width: 100%; padding: 20px 0 6px; border: 0; resize: vertical; background: transparent; color: var(--jf-text); font-size: 17px; line-height: 1.6; }
+.jf-composer textarea::placeholder { color: var(--jf-muted); }
+.jf-compose-tools { display: flex; align-items: center; gap: 8px; border-top: 1px solid var(--jf-line); padding: 9px 0; color: var(--jf-accent); }
+.jf-compose-tools button { display: flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 8px; font-size: 12px; }
+.jf-compose-tools > span { color: var(--jf-muted); font-size: 11px; margin-left: auto; }
+.jf-attach-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; margin: 12px 0; }
+.jf-attach { position: relative; height: 140px; border: 1px solid var(--jf-line); border-radius: 12px; overflow: hidden; background: var(--jf-soft); }
+.jf-attach img { width: 100%; height: 100%; object-fit: cover; }
+.jf-app .jf-attach-remove { position: absolute; right: 3px; top: 3px; display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; background: #102119df; color: white; font-size: 25px; }
+.jf-file-kind { position: absolute; bottom: 6px; left: 7px; padding: 2px 6px; border-radius: 5px; background: #102119dd; color: white; font-size: 11px; }
+@media (min-width: 700px) { .jf-composer { width: 600px; max-height: 90dvh; height: auto; inset: 5dvh auto auto; margin: auto; border-radius: 18px; } }

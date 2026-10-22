@@ -1,0 +1,14 @@
+.jf-viewer { background: #0b1110; color: #f4f5ef; overflow: hidden; }
+.jf-viewer-layout { display: flex; flex-direction: column; height: 100%; }
+.jf-viewer .jf-dialog-header { border: 0; flex-shrink: 0; background: #0b1110; }
+.jf-viewer .jf-icon-button:hover { background: #26322c; }
+.jf-viewer [data-position] { color: #d0d9d0; font-size: 12px; }
+.jf-app .jf-fit { min-height: 36px; padding: 0 13px; border: 1px solid #5a665f; border-radius: 20px; color: #e9eee8; font-size: 12px; }
+.jf-viewer-stage { flex: 1; min-height: 0; display: grid; place-items: center; overflow: hidden; }
+.jf-viewer-stage img, .jf-viewer-stage video { display: block; width: 100%; height: 100%; min-height: 0; max-height: 100%; object-fit: contain; }
+.jf-viewer-stage img { touch-action: none; user-select: none; -webkit-user-drag: none; }
+.jf-viewer-controls { display: flex; align-items: center; justify-content: center; gap: 30px; }
+.jf-viewer-footer { flex-shrink: 0; padding: 16px 20px max(22px,env(safe-area-inset-bottom)); background: #0b1110; }
+.jf-viewer-footer strong { font-size: 14px; }
+.jf-viewer-footer p { max-height: 64px; overflow-y: auto; white-space: pre-wrap; overflow-wrap: anywhere; margin-top: 9px; color: #c1ccc3; font-size: 13px; line-height: 1.6; }
+.jf-viewer-status { flex-shrink: 0; color: #f7c9a9; padding: 0 20px; font-size: 12px; line-height: 1.7; }

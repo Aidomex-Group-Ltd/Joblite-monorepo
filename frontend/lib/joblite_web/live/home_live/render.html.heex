@@ -1,0 +1,48 @@
+<div id="joblite-feed" class="jf-app" phx-hook="FeedRoot">
+  <div class="jf-layout">
+    <.desktop_nav page={@feed.page} />
+    <div class="jf-shell">
+      <.header />
+      <.tabs page={@feed.page} tab={@feed.tab} />
+      <main id="main" class="jf-feed">
+        <div class="jf-connection" role="status">Connection interrupted. Reconnecting…</div>
+        <p id="feed-notice" class="jf-notice" role="status" aria-live="polite">{@feed.notice}</p>
+        <.quick_compose :if={@feed.page != "saved"} />
+        <.feed_stream
+          items={
+            JobliteWeb.HomeLive.FeedState.stream(
+              @feed,
+              JobliteWeb.HomeLive.discovery_card(@discovery)
+            )
+          }
+          liked={@feed.liked}
+          saved={@feed.saved}
+          signed_in={@current_user != nil}
+        />
+        <.empty_state
+          :if={JobliteWeb.HomeLive.FeedState.visible_posts(@feed) == []}
+          page={@feed.page}
+        />
+        <p :if={@discovery.failed} class="jf-local-note">
+          The job board directory is unavailable right now.
+        </p>
+        <footer class="jf-end">
+          Sample feed · saves and posts reset on refresh.
+          <button
+            id="architecture-details"
+            type="button"
+            phx-click="feed:about"
+            aria-expanded={to_string(@feed.show_about)}
+          >About this preview</button>
+          <p :if={@feed.show_about} id="boundary-explanation">
+            {@architecture.ui} · {@architecture.database} · {@architecture.runtime}. Only backend contexts access the database.
+          </p>
+        </footer>
+      </main>
+      <.bottom_nav page={@feed.page} />
+    </div>
+    <JobliteWeb.Components.AppChrome.desktop_rail />
+  </div>
+  <.composer uploads={@uploads} />
+  <.media_viewer />
+</div>

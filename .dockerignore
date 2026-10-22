@@ -1,0 +1,46 @@
+# Dockerignore for the workspace-parent build context
+# (backend/deploy/Dockerfile, BuildKit `Dockerfile.dockerignore` convention).
+#
+# The context needs only the two sibling application repositories. Everything
+# else at the workspace parent (integration packages, kits, archives, programs)
+# is excluded.
+
+*
+!backend
+!backend/**
+!frontend
+!frontend/**
+
+# Host build state, dependencies and tooling caches: never part of the build.
+**/_build
+**/deps
+**/node_modules
+**/.git
+**/.github
+**/.elixir_ls
+**/doc
+**/cover
+
+# Local databases, backups, crash dumps and secrets.
+**/.env
+**/.env.*
+**/erl_crash.dump
+**/.joblite-backups
+backend/deploy/certs
+backend/deploy/.env
+frontend/.joblite-backups
+
+# Material not needed to assemble the release.
+backend/docs
+backend/test
+backend/scripts
+backend/compose.yaml
+frontend/docs
+frontend/test
+frontend/scripts
+
+# Host-built static artifacts are regenerated inside the image by
+# `mix assets.deploy`. Only the committed feed demonstration media is kept.
+frontend/priv/static/assets/*
+!frontend/priv/static/assets/joblite-feed
+frontend/priv/static/cache_manifest.json

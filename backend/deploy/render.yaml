@@ -1,0 +1,90 @@
+# Render blueprint for the Joblite monorepo (backend + frontend as siblings).
+#
+# This file is copied to the monorepo repository root by
+# backend/deploy/assemble-monorepo.sh; Render reads `render.yaml` from the
+# repository root. The Docker build reuses the same Dockerfile as local
+# verification, built from the repository root as context.
+#
+# Division of labour, matching the isolated verification stack
+# (backend/deploy/compose.yaml): migrations are NEVER implicit. The web
+# service itself never migrates. Migrations are applied explicitly after each
+# deploy as a one-off job created from the `joblite` service (Render
+# dashboard: the service -> "Run Job", or Render Shell in the web instance):
+#
+#   /app/bin/joblite eval 'JobliteWeb.Release.migrate()'
+#
+# The Blueprint spec has no `job` service type, so the job cannot be declared
+# here; it is created from the deployed service instead.
+#
+# The Blueprint spec also has no build-target field: Render builds the final
+# stage of the Dockerfile, and the final stage of backend/deploy/Dockerfile is
+# the product image (`liveview`). The maintenance stage (`backend`) is built
+# from the same file with `--target backend` for local verification.
+#
+# Before first deploy set PHX_HOST below to the service's real public
+# hostname (joblite-<something>.onrender.com, or a custom domain).
+
+databases:
+  - name: joblite-db
+    databaseName: joblite
+    user: joblite
+    plan: free
+    # No external (public) database connections: the app reaches the instance
+    # over Render's private network.
+    ipAllowList: []
+
+services:
+  - type: web
+    name: joblite
+    runtime: docker
+    plan: free
+    dockerfilePath: ./backend/deploy/Dockerfile
+    dockerContext: .
+    # Liveness only: the render edge sends X-Forwarded-Proto, so force_ssl
+    # does not redirect real traffic; readiness stays observable at
+    # /health/ready once migrations have been applied.
+    healthCheckPath: /health/live
+    envVars:
+      # Must equal the public hostname the browser uses; it drives the https
+      # URL, secure cookies and the LiveView WebSocket origin check.
+      #
+      # Render assigns the onrender.com hostname of the `joblite` service
+      # itself (service slug + short id). The value below is the hostname
+      # Render gave this service in the `joblite` service of the `My project`
+      # project; it must be updated if the service is ever recreated and
+      # receives a different slug.
+      - key: PHX_HOST
+        value: joblite-a1k1.onrender.com
+      - key: SECRET_KEY_BASE
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: joblite-db
+          property: connectionString
+        includeCredentials: true
+      # Render's managed PostgreSQL terminates TLS without shipping a CA file;
+      # connections stay encrypted without certificate pinning. Hosts that
+      # provide a CA bundle should switch to verify-full and add
+      # DATABASE_CA_CERT / DATABASE_SSL_SERVER_NAME instead.
+      #
+      # Supabase: replace DATABASE_URL with the Session Pooler connection
+      # string from the Dashboard "Connect" panel. The direct
+      # db.<project-ref>.supabase.co host is IPv6-only and unreachable from
+      # Render (Postgrex logs "non-existing domain - :nxdomain"); the pooler
+      # host (aws-0-<region>.pooler.supabase.com) is IPv4 and works here.
+      - key: DATABASE_SSL
+        value: require
+      - key: POOL_SIZE
+        value: "10"
+      # PORT is assigned by Render and read by the release; never hardcode it.
+#
+# The migration job is intentionally not declared here: the Blueprint spec
+# accepts only web/worker/pserv/cron/static/keyvalue/workflow services, and a
+# `type: job` entry makes the whole blueprint fail to sync. Run the migration
+# as a one-off job from the `joblite` service instead:
+#
+#   /app/bin/joblite eval 'JobliteWeb.Release.migrate()'
+#
+# The one-off job inherits the web service's environment, so it reaches the
+# same database over Render's private network with `DATABASE_SSL=require`.
+

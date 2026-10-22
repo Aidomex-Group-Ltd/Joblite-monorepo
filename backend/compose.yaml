@@ -1,0 +1,28 @@
+services:
+  postgres:
+    image: postgres:18
+    # Local development/test only: fsync=off because the Docker volume's fsync
+    # pathologically slow (initial recovery exceeded 220s without finishing on
+    # this host). This instance never holds production or candidate data; the
+    # port binds to 127.0.0.1 with a documented local-only password. Do not
+    # copy this flag to any shared or deployed environment.
+    command: postgres -c fsync=off
+    environment:
+      POSTGRES_USER: joblite
+      POSTGRES_PASSWORD: joblite_local_only
+      # The development database name. The test database is created by
+      # `mix ecto.create` (run automatically by `mix test`).
+      POSTGRES_DB: joblite_dev_db
+    ports:
+      # 5543 avoids the development host, where a PostgreSQL instance already
+      # occupies 127.0.0.1:5432 (and 5433). config/shared.exs mirrors this port.
+      - "127.0.0.1:5543:5432"
+    volumes:
+      - joblite_pg:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U joblite -d joblite_dev_db"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+volumes:
+  joblite_pg:

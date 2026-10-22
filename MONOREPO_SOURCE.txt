@@ -1,0 +1,7 @@
+Joblite monorepo source record
+assembled_utc: 2026-10-22T20:44:22Z
+mode: clean
+backend_sha: b109bab2c7b64c8b454f10650a6ccf72da001124
+frontend_sha: b4dfc33f52a53a354b1b41d104a53d4ac18638d6
+dockerfile: backend/deploy/Dockerfile (target liveview, maintenance target backend)
+blueprint: render.yaml (copied from backend/deploy/render.yaml)

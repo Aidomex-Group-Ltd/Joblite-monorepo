@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "current_phase": "P03",
+  "current_atom": "P03.03",
+  "status": "planned",
+  "verified_atoms": [
+    "P00.01",
+    "P00.02",
+    "P00.03",
+    "P00.04",
+    "P01.01",
+    "P01.02",
+    "P01.03",
+    "P01.04",
+    "P01.05",
+    "P01.06",
+    "P02.01",
+    "P02.02",
+    "P02.03",
+    "P02.04",
+    "P03.01",
+    "P03.02"
+  ],
+  "blocked_atoms": [],
+  "next_action": "P03.03: organizations, memberships and scoped roles; two seeded organizations; candidate global identity and organization-specific role remain distinct. The job board directory increment (P12) leaves two atoms open: the worker that calls Joblite.JobBoards.sync_source/2 within the permitted interval, and the account preference screen.",
+  "last_evidence_record": "docs/iterations/P12.md",
+  "updated_at": "2026-10-21T19:06:41Z"
+}

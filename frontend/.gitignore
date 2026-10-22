@@ -1,0 +1,15 @@
+/_build/
+/deps/
+/doc/
+/cover/
+/.elixir_ls/
+/.env
+/.env.*
+/priv/static/assets/*
+!/priv/static/assets/joblite-feed/
+/priv/static/cache_manifest.json
+/.joblite-backups/
+/erl_crash.dump
+/secrets/*
+!/secrets/*.example
+/priv/static/uploads/

@@ -1,0 +1,78 @@
+<div id="joblite-saved-boards" class="jf-app">
+  <div class="jf-layout">
+    <JobliteWeb.Components.AppChrome.desktop_nav current="saved" />
+    <div class="jf-shell">
+      <header class="jf-header">
+        <a class="jf-logo" href="/" aria-label="Joblite home"><span>j</span>joblite<b>.</b></a>
+        <div><small>SAVED</small></div>
+      </header>
+
+      <main id="main" class="jf-explore">
+        <h1>Saved boards</h1>
+        <p class="jf-explore-intro">
+          The boards you keep for later. The list belongs to your account and stays out of the feed rotation
+          until you dismiss it.
+        </p>
+
+        <p id="saved-notice" class="jf-notice" role="status" aria-live="polite">{@notice}</p>
+
+        <.async_result :let={boards} assign={@saved}>
+          <:loading>
+            <p class="jf-explore-state">Loading your saved boards…</p>
+          </:loading>
+          <:failed :let={_failure}>
+            <p class="jf-explore-state">
+              Your saved boards could not be loaded. The registry is unavailable right now.
+            </p>
+          </:failed>
+          <div :if={boards == []} class="jf-explore-state">
+            <h2>No board saved yet.</h2>
+            <p>Save a board from the directory and it will wait for you here.</p>
+            <a class="jf-explore-clear" href="/explore">Explore the directory</a>
+          </div>
+          <div :if={boards != []} class="jf-board-list">
+            <.board_card
+              :for={board <- boards}
+              board={board}
+              saved={true}
+              id_prefix="saved-board"
+            />
+          </div>
+        </.async_result>
+
+        <.async_result :let={hidden} assign={@hidden}>
+          <:loading>
+            <p class="jf-explore-state">Loading your hidden boards…</p>
+          </:loading>
+          <:failed :let={_failure}>
+            <p class="jf-explore-state">
+              Your hidden boards could not be loaded. The registry is unavailable right now.
+            </p>
+          </:failed>
+          <div :if={hidden != []} class="jf-hidden-boards">
+            <h2>Hidden boards</h2>
+            <p class="jf-explore-intro">
+              These boards stay out of the feed rotation. Bring one back when you want to see it
+              again.
+            </p>
+            <div class="jf-board-list">
+              <.board_card
+                :for={board <- hidden}
+                board={board}
+                dismissed={true}
+                id_prefix="hidden-board"
+              />
+            </div>
+          </div>
+        </.async_result>
+      </main>
+
+      <nav class="jf-bottom-nav" aria-label="Main navigation">
+        <a href="/"><span>Feed</span></a>
+        <a href="/explore"><span>Explore</span></a>
+        <a href="/explore/saved" aria-current="page"><span>Saved boards</span></a>
+      </nav>
+    </div>
+    <JobliteWeb.Components.AppChrome.desktop_rail />
+  </div>
+</div>

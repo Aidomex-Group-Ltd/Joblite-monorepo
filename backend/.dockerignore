@@ -1,0 +1,26 @@
+# Build-context filter for the repository-root Dockerfile.
+#
+# Keeps local state, dependencies and secrets out of the build context: the
+# image is built from source only, and no local secret file is ever sent to
+# the builder.
+
+.git/
+.gitignore
+.editorconfig
+_build/
+deps/
+cover/
+doc/
+.elixir_ls/
+erl_crash.dump
+
+# Local secrets and runtime configuration.
+secrets/
+deploy/.env
+deploy/certs/
+
+# Not needed to build the release.
+test/
+scripts/
+docs/
+*.md
