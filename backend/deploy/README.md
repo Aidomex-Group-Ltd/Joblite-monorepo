@@ -98,11 +98,13 @@ explicit path.
    service and it drives https URLs, secure cookies and the LiveView
    WebSocket origin check.
 2. The blueprint creates the `joblite` web service (the final stage of the
-   Dockerfile, `liveview`; health check `/health/live`) and `joblite-db`.
-   The app talks to the database over Render's private network with
-   `DATABASE_SSL=require` (TLS without a CA bundle; Render ships none).
-   Hosts that do provide a CA should use `verify-full` plus
-   `DATABASE_CA_CERT`/`DATABASE_SSL_SERVER_NAME` instead.
+   Dockerfile, `liveview`; health check `/health/live`) but no Render
+   PostgreSQL database. The production database is the existing Aiven
+   PostgreSQL instance (`pg-2855ae63-joblite.k.aivencloud.com` /
+   `defaultdb`). Set `DATABASE_URL` as a Render secret (`sync: false` in
+   `render.yaml`); never commit the connection string. Keep
+   `DATABASE_SSL=require` unless a stable Aiven CA bundle is mounted and
+   `verify-full` with `DATABASE_CA_CERT`/`DATABASE_SSL_SERVER_NAME` is used.
 3. Apply migrations explicitly as a one-off job created from the `joblite`
    service (Render dashboard → Run Job), or from Render Shell in the web
    instance:
